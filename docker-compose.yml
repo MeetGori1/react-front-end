@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  # This service will build and serve the React app
+  bookstore:
+    build: .
+    container_name: bookstore
+    ports:
+      - "3000:80"  # Expose port 3000 locally and bind it to the container's port 80
+    volumes:
+      - ./src:/src  # Mount the source folder to reflect changes without rebuilding
+      - ./public:/public  # Same for public folder
+    environment:
+      - NODE_ENV=production
+    networks:
+      - bookstore_network
+    restart: always
+
+networks:
+  bookstore_network:
+    driver: bridge
